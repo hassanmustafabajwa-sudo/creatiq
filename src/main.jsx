@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowUpRight, Menu, X, MoveUpRight } from 'lucide-react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 import './styles.css';
 import Experience3D from './components/Experience3D';
 
@@ -15,9 +15,24 @@ const work = [
 const services = ['Brand Strategy','UI / UX Design','Web Development','Motion Design','Growth Marketing','Digital Products'];
 
 function Reveal({children, delay=0, className=''}) {
-  return <motion.div className={className} initial={{opacity:0,y:35}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.18}} transition={{duration:.7,ease:[.16,1,.3,1],delay}}>{children}</motion.div>
+  return <motion.div className={className} initial={{opacity:0,y:42}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.22}} transition={{duration:.85,ease:[.16,1,.3,1],delay}}>{children}</motion.div>
+}
+function SplitText({children,className=''}) {
+  return <span className={className}>{String(children).split(' ').map((word,i)=><span className="split-word" key={i}><span>{word}</span>{i<String(children).split(' ').length-1?' ':''}</span>)}</span>
 }
 
+
+function WorkCard({item,index}) {
+  const ref=React.useRef(null);
+  const {scrollYProgress}=useScroll({target:ref,offset:["start end","end start"]});
+  const y=useTransform(scrollYProgress,[0,1],[index%2===0?70:-70,index%2===0?-70:70]);
+  const scale=useTransform(scrollYProgress,[0,.45,1],[.88,1,.92]);
+  const rotate=useTransform(scrollYProgress,[0,1],[index%2===0?-2:2,index%2===0?2:-2]);
+  return <motion.article ref={ref} className="work-card" style={{y,scale,rotate}}>
+    <div className="work-image"><motion.img src={item.image} alt="" loading="lazy" style={{scale:useTransform(scrollYProgress,[0,1],[1.16,1.02])}}/><div className="work-shade"></div><div className="work-overlay"><span>{item.n} / 04</span><ArrowUpRight/></div><div className="work-index">{item.n}</div></div>
+    <div className="work-info"><h3>{item.title}</h3><p>{item.type}</p></div>
+  </motion.article>
+}
 function App(){
   const [open,setOpen]=React.useState(false);
   const {scrollYProgress}=useScroll();
@@ -26,7 +41,7 @@ function App(){
   const go=(id)=>{setOpen(false);document.getElementById(id)?.scrollIntoView({behavior:'smooth'});};
 
   return <div className="site">
-    <header className="nav">
+    <header className="nav"><div className="nav-progress" aria-hidden="true"><motion.i style={{scaleX:scrollYProgress}} /></div>
       <button className="brand" onClick={()=>go('top')}>CREATIQ<span>®</span></button>
       <nav className="desktop-nav">
         <button onClick={()=>go('work')}>Work</button><button onClick={()=>go('services')}>Services</button><button onClick={()=>go('studio')}>Studio</button>
@@ -43,22 +58,22 @@ function App(){
       <section className="hero">
         <motion.div className="hero-inner" style={{y:heroY}}>
           <Reveal><p className="eyebrow">Independent digital studio · Lahore / Worldwide</p></Reveal>
-          <h1><span>Elevating</span><span className="indent">brands through</span><span>digital design<span className="dot">.</span></span></h1>
+          <div className="hero-kicker">Strategy / Design / Technology</div>
+          <h1><span>We make</span><span className="indent">brands feel</span><span><em>unmistakable.</em><b>.</b></span></h1>
           <div className="hero-bottom">
-            <p>Strategy, design and technology for brands that refuse to blend in.</p>
+            <p>Digital identities and experiences built with clarity, motion and intent.</p>
             <button onClick={()=>go('work')} className="round-arrow">↓</button>
           </div>
         </motion.div>
-        <motion.div className="hero-orbit" style={{rotate:useTransform(scrollYProgress,[0,.45],[0,120]),scale:useTransform(scrollYProgress,[0,.35],[1,.72])}}><span></span><span></span><span></span></motion.div>
+        <motion.div className="hero-orbit" style={{rotate:useTransform(scrollYProgress,[0,.45],[0,180]),scale:useTransform(scrollYProgress,[0,.35],[1,.68])}}><span></span><span></span><span></span></motion.div>
+        <motion.div className="hero-glow" style={{y:useTransform(scrollYProgress,[0,.3],[0,180]),scale:useTransform(scrollYProgress,[0,.3],[1,.6])}} />
         <div className="hero-grid" aria-hidden="true"></div>
         <div className="scroll-cue"><span></span>Scroll to explore</div>
       </section>
 
-      <div className="marquee dark"><div>BUILT FOR ATTENTION · BUILT FOR GROWTH · BUILT FOR WHAT'S NEXT ·&nbsp;</div><div>BUILT FOR ATTENTION · BUILT FOR GROWTH · BUILT FOR WHAT'S NEXT ·&nbsp;</div></div>
-
       <section className="intro" id="studio">
         <Reveal><p className="eyebrow">01 — The studio</p></Reveal>
-        <Reveal delay={.08}><h2>We design <em>digital experiences</em> that make ambitious brands impossible to ignore.</h2></Reveal>
+        <Reveal delay={.08}><h2 className="split-heading"><SplitText>We design digital experiences that make ambitious brands impossible to ignore.</SplitText></h2></Reveal>
         <div className="intro-meta"><span>Strategy</span><span>Design</span><span>Development</span><span>Growth</span></div>
       </section>
 
@@ -74,7 +89,7 @@ function App(){
 
       <section className="work" id="work">
         <div className="section-head"><p className="eyebrow">03 — Selected work</p><span>Selected / 2024—26</span></div>
-        <div className="work-grid">{work.map((item,i)=><Reveal key={item.title} delay={i*.05} className="work-card"><div className="work-image"><img src={item.image} alt="" loading="lazy"/><div className="work-overlay"><span>{item.n}</span><ArrowUpRight/></div></div><div className="work-info"><h3>{item.title}</h3><p>{item.type}</p></div></Reveal>)}</div>
+        <div className="work-grid">{work.map((item,i)=><WorkCard key={item.title} item={item} index={i}/>)}</div>
       </section>
 
       <section className="process">
@@ -95,7 +110,7 @@ function App(){
       </section>
     </main>
 
-    <footer><div><div className="brand">CREATIQ<span>®</span></div><p>Independent digital studio.<br/>Built for ambitious brands.</p></div><div className="footer-links"><button>Instagram</button><button>LinkedIn</button><button>Email</button></div><div className="copyright">© 2026 Creatiq Studio</div></footer>
+    <footer><div className="footer-top"><div><div className="brand footer-brand">CREATIQ<span>®</span></div><p>Independent digital studio.<br/>Built for ambitious brands.</p></div><div className="footer-links"><button onClick={()=>go('work')}>Work</button><button onClick={()=>go('services')}>Services</button><button onClick={()=>go('studio')}>Studio</button><button onClick={()=>go('contact')}>Contact</button></div><button className="footer-up" onClick={()=>go('top')}><ArrowUpRight/>Back to top</button></div><div className="footer-bottom"><span>LAHORE / WORLDWIDE</span><span>CREATIVE TECHNOLOGY / 2026</span><span>© 2026 Creatiq Studio</span></div></footer>
   </div>
 }
 
