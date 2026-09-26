@@ -54,7 +54,7 @@ function App(){
     </div>
    </section>
 
-   <section className="manifesto">
+   <section className="manifesto" id="about">
     <div className="manifesto-bg"><img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1800&q=85" alt="Abstract landscape"/></div>
     <div className="manifesto-inner"><Label>Manifesto</Label><motion.h2 initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} transition={{duration:1}}>NO<br/><span>BORING</span><br/>STUFF.</motion.h2><p>We bring unique perspective to help ambitious companies stand out among the crowd.</p></div>
    </section>
