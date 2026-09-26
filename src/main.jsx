@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight, Menu, X, MoveUpRight } from 'lucide-react';
 import './styles.css';
+import Experience3D from './components/Experience3D';
 
 const work = [
   { n:'01', title:'Aether Audio', type:'Brand / Digital', image:'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=1600&q=85&auto=format&fit=crop' },
@@ -68,9 +69,7 @@ function App(){
 
       <section className="feature-stage">
         <div className="feature-copy"><p className="eyebrow">02.5 — Experience</p><h2>Ideas with <em>movement.</em></h2><p>We combine strategy, visual design and technology into digital experiences that feel alive.</p></div>
-        <motion.div className="floating-object" style={{rotateX:useTransform(scrollYProgress,[.25,.62],[-18,18]),rotateY:useTransform(scrollYProgress,[.25,.62],[20,-25]),y:useTransform(scrollYProgress,[.25,.62],[80,-100])}}>
-          <div className="object-ring ring-a"></div><div className="object-ring ring-b"></div><div className="object-core"><span>CTQ</span></div>
-        </motion.div>
+        <div className="floating-object"><Experience3D /></div>
       </section>
 
       <section className="work" id="work">
