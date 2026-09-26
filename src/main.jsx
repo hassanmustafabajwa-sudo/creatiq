@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, X, MoveUpRight } from 'lucide-react';
 import './styles.css';
 
 const work = [
@@ -48,7 +48,9 @@ function App(){
             <button onClick={()=>go('work')} className="round-arrow">↓</button>
           </div>
         </motion.div>
-        <div className="hero-orbit"><span></span><span></span><span></span></div>
+        <motion.div className="hero-orbit" style={{rotate:useTransform(scrollYProgress,[0,.45],[0,120]),scale:useTransform(scrollYProgress,[0,.35],[1,.72])}}><span></span><span></span><span></span></motion.div>
+        <div className="hero-grid" aria-hidden="true"></div>
+        <div className="scroll-cue"><span></span>Scroll to explore</div>
       </section>
 
       <div className="marquee dark"><div>BUILT FOR ATTENTION · BUILT FOR GROWTH · BUILT FOR WHAT'S NEXT ·&nbsp;</div><div>BUILT FOR ATTENTION · BUILT FOR GROWTH · BUILT FOR WHAT'S NEXT ·&nbsp;</div></div>
@@ -64,6 +66,13 @@ function App(){
         <div className="service-list">{services.map((s,i)=><Reveal key={s} delay={i*.04}><div className="service-row"><span>0{i+1}</span><h3>{s}</h3><ArrowUpRight className="service-arrow"/><span className="service-word">CREATIQ</span></div></Reveal>)}</div>
       </section>
 
+      <section className="feature-stage">
+        <div className="feature-copy"><p className="eyebrow">02.5 — Experience</p><h2>Ideas with <em>movement.</em></h2><p>We combine strategy, visual design and technology into digital experiences that feel alive.</p></div>
+        <motion.div className="floating-object" style={{rotateX:useTransform(scrollYProgress,[.25,.62],[-18,18]),rotateY:useTransform(scrollYProgress,[.25,.62],[20,-25]),y:useTransform(scrollYProgress,[.25,.62],[80,-100])}}>
+          <div className="object-ring ring-a"></div><div className="object-ring ring-b"></div><div className="object-core"><span>CTQ</span></div>
+        </motion.div>
+      </section>
+
       <section className="work" id="work">
         <div className="section-head"><p className="eyebrow">03 — Selected work</p><span>Selected / 2024—26</span></div>
         <div className="work-grid">{work.map((item,i)=><Reveal key={item.title} delay={i*.05} className="work-card"><div className="work-image"><img src={item.image} alt="" loading="lazy"/><div className="work-overlay"><span>{item.n}</span><ArrowUpRight/></div></div><div className="work-info"><h3>{item.title}</h3><p>{item.type}</p></div></Reveal>)}</div>
@@ -73,6 +82,8 @@ function App(){
         <div className="section-head"><p className="eyebrow">04 — Process</p><span>Simple. Focused. Relentless.</span></div>
         {['Discover','Define','Create','Launch'].map((x,i)=><Reveal key={x} delay={i*.06}><div className="process-row"><span>0{i+1}</span><h3>{x}</h3><p>{['Find the signal, audience and opportunity.','Turn insight into a sharp creative direction.','Design and build every detail with intent.','Ship, learn and keep moving forward.'][i]}</p><ArrowUpRight/></div></Reveal>)}
       </section>
+
+      <section className="horizontal-statement"><div className="horizontal-track"><span>STRATEGY</span><i>×</i><span>DESIGN</span><i>×</i><span>TECHNOLOGY</span><i>×</i><span>GROWTH</span><i>×</i></div></section>
 
       <section className="statement">
         <div className="statement-line">150+ brands</div><div className="statement-line outline">18 countries</div><div className="statement-line">1 creative engine.</div>
