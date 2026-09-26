@@ -41,7 +41,7 @@ function App(){
    <section className="hero">
     <div className="hero-left">
      <div className="tiny">We are</div>
-     <motion.h1 initial={{opacity:0,y:70}} animate={{opacity:1,y:0}} transition={{duration:1,ease:[.16,1,.3,1]}}>Creative<br/>Agency for<br/><em>Bold Companies.</em></motion.h1>
+     <motion.h1 initial={{opacity:0,y:"18vh"}} animate={{opacity:1,y:0}} transition={{duration:1.15,ease:[.16,1,.3,1]}}>Creative<br/>Agency for<br/><em>Bold Companies.</em></motion.h1>
      <p>A creative studio building distinctive brands, websites and digital experiences that refuse to blend in.</p>
      <a className="yellow-btn" href="#work">Our Works <ArrowUpRight/></a>
     </div>
@@ -56,7 +56,7 @@ function App(){
 
    <section className="manifesto" id="about">
     <div className="manifesto-bg"><img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1800&q=85" alt="Abstract landscape"/></div>
-    <div className="manifesto-inner"><Label>Manifesto</Label><motion.h2 initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} transition={{duration:1}}>NO<br/><span>BORING</span><br/>STUFF.</motion.h2><p>We bring unique perspective to help ambitious companies stand out among the crowd.</p></div>
+    <div className="manifesto-inner"><Label>Manifesto</Label><motion.h2 initial={{opacity:0,y:80}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.25}} transition={{duration:1,ease:[.16,1,.3,1]}}>NO<br/><span>BORING</span><br/>STUFF.</motion.h2><p>We bring unique perspective to help ambitious companies stand out among the crowd.</p></div>
    </section>
 
    <section id="work" className="works">
@@ -74,7 +74,7 @@ function App(){
     <div className="service-list">{services.map((s,i)=><motion.div className="service-item" key={s} whileHover={{x:12}}><span>(0{i+1})</span><h2>{s}</h2><ArrowUpRight/></motion.div>)}</div>
    </section>
 
-   <section id="about" className="why">
+   <section className="why">
     <div className="why-head"><Label>Why Us</Label><p>With a focused team and a sharp eye for detail, we craft bold brands and high-impact digital experiences built to get remembered.</p></div>
     <div className="why-grid"><div className="why-photo"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=85" alt="Studio"/></div><div className="numbers">
       <div><strong>40+</strong><span>Projects completed to date.</span></div><div><strong>98%</strong><span>Client satisfaction rate.</span></div><div><strong>12+</strong><span>Industries and markets reached.</span></div>
@@ -83,7 +83,7 @@ function App(){
 
    <section className="testimonials">
     <Label>Testimonials</Label><div className="testimonial-title"><h2>WORDS FROM<br/><em>OUR HAPPY CLIENTS.</em></h2><div className="arrows"><button onClick={()=>setSlide((slide-1+testimonials.length)%testimonials.length)}>←</button><button onClick={()=>setSlide((slide+1)%testimonials.length)}>→</button></div></div>
-    <motion.div className="quote" key={slide} initial={{opacity:0,x:35}} animate={{opacity:1,x:0}} transition={{duration:.5}}><blockquote>“{testimonials[slide][0]}”</blockquote><div className="quote-author"><div>{testimonials[slide][1][0]}</div><span>{testimonials[slide][1]}<small>{testimonials[slide][2]}</small></span></div></motion.div>
+    <motion.div className="quote" key={slide} initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{duration:.7,ease:[.16,1,.3,1]}}><blockquote>“{testimonials[slide][0]}”</blockquote><div className="quote-author"><div>{testimonials[slide][1][0]}</div><span>{testimonials[slide][1]}<small>{testimonials[slide][2]}</small></span></div></motion.div>
    </section>
 
    <section className="team">
